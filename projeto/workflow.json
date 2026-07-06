@@ -1,0 +1,141 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "d6a49bc0-6e0b-4257-9168-5758a37178cb",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f4143942-df52-4ad5-aaf6-f1939736ed69",
+              "name": "dados_world_bank",
+              "value": "country_name     indicator_code  ano_inicial  ano_final  valor_inicial  valor_final  crescimento_absoluto  crescimento_percentual             indicador_amigavel  ranking_crescimento 0        Finland     SE.ADT.LITR.ZS         2010       2015      90.000000    97.122967              7.122967                7.914408      taxa_alfabetizacao_adulta                    1 1  United States     SE.ADT.LITR.ZS         2010       2015      90.000000    96.913813              6.913813                7.682014      taxa_alfabetizacao_adulta                    2 2         Brazil     SE.ADT.LITR.ZS         2010       2015      70.000000    74.776583              4.776583                6.823689      taxa_alfabetizacao_adulta                    3 3      Singapore     SE.ADT.LITR.ZS         2010       2015      90.000000    95.490644              5.490644                6.100716      taxa_alfabetizacao_adulta                    4 4         Angola     SE.ADT.LITR.ZS         2010       2015      70.000000    74.260226              4.260226                6.086037      taxa_alfabetizacao_adulta                    5 5          Japan     SE.ADT.LITR.ZS         2010       2015      90.000000    94.883315              4.883315                5.425905      taxa_alfabetizacao_adulta                    6 6         Angola  SE.XPD.TOTL.GB.ZS         2010       2015       4.861194     5.336711              0.475517                9.781903  pct_gasto_publico_em_educacao                    1 7  United States  SE.XPD.TOTL.GB.ZS         2010       2015       5.031941     5.225579              0.193637                3.848160  pct_gasto_publico_em_educacao                    2 8         Brazil  SE.XPD.TOTL.GB.ZS         2010       2015       4.931161     4.932562              0.001400                0.028399  pct_gasto_publico_em_educacao                    3 9        Finland  SE.XPD.TOTL.GB.ZS         2010       2015       5.351957     5.277133             -0.074824               -1.398064  pct_gasto_publico_em_educacao                    4",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "2fe7e3f9-6cb2-475c-adc3-58081fdbf045",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        416,
+        0
+      ],
+      "id": "4ebca7f2-9603-4a37-b548-4bfc2b5caa96",
+      "name": "When chat message received",
+      "webhookId": "02968797-8cdc-4c4c-9f59-ce046c20dcc9"
+    },
+    {
+      "parameters": {
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        624,
+        0
+      ],
+      "id": "efdee6c7-6be2-4ec8-9cf8-7efb40fdfcf8",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "gpt-4o"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        832,
+        0
+      ],
+      "id": "a5e91be1-eccf-442b-b7ec-9a6c9cffebe6",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "xhWJ28YGXnwX9rO8",
+          "name": "OpenAI account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "76658508-1b6a-4deb-b182-b78dd3f88dd7",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2c703fb8292df105c05591e0b498687d58e3400e4a9ef066b7188e0d982f4b77"
+  },
+  "nodeGroups": [],
+  "id": "lAfTSr0M7WkDJzp1",
+  "tags": []
+}
